@@ -1,129 +1,110 @@
 <!DOCTYPE html>
-<!-- saved from url=(0026)https://promisesaplus.com/ -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
-    <title>Promises/A+</title>
+<html>
+ <head> 
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <title>Promises/A+</title> 
+  <script>
+    "use strict";
+    if (location.href.indexOf("github.io") !== -1) {
+      location.href = "https://promisesaplus.cn/";
+    }
+  </script> 
+  <link rel="stylesheet" href="./src/stylesheet.css" /> 
+  <link rel="shortcut icon" href="https://promisesaplus.cn/src/favicon.ico" /> 
+  <link rel="canonical" href="https://promisesaplus.cn/" /> 
+ </head> 
+ <body class="spec"> 
+  <h1 id="promisesa">Promises/A+</h1> 
+  <p id="point-1"><a href="https://promisesaplus.cn/#point-1" class="anchor"></a><strong> 一个开源且通用的JavaScript Promise 标准,由开发者制定，供开发者参考。 </strong></p> 
+  <p id="point-2"><a href="https://promisesaplus.cn/#point-2" class="anchor"></a><em>promise</em>相当于异步操作的最终结果. 与之进行交互的方式主要是 <code class="highlighter-rouge">then</code> 方法，该方法注册了一个回调函数，接收 <em>promise</em> 成功的返回值或当前 <em>promise</em> 失败的原因。 </p> 
+  <p id="point-3"><a href="https://promisesaplus.cn/#point-3" class="anchor"></a> 本规范详细列出了 <code class="highlighter-rouge">then</code> 方法的执行过程, 因为此规范是十分稳定的，所以所有遵循 Promises/A+ 规范实现的 promise 均可以依照本标准作为参照。尽管 Promise/A+ 组织有可能会修订本规范，但主要是为了处理一些新发现的极端问题，且这些改动都是微小且向下兼容的。如果我们要进行大规模不兼容的更新，我们一定会在事先进行谨慎考虑、探讨和测试。</p> 
+  <p id="point-4"><a href="https://promisesaplus.cn/#point-4" class="anchor"></a> 历来，此规范实际上是把之前 <a href="http://wiki.commonjs.org/wiki/Promises/A">Promise/A 规范</a> 中的建议明确成为了行为标准：我们一方面扩展了原有规范约定俗成的行为，一方面删减了原规范的一些特例情况和有问题的部分。 </p> 
+  <p id="point-5"><a href="https://promisesaplus.cn/#point-5" class="anchor"></a>最后，核心的 Promises/A+ 规范不设计如何创建、解决和拒绝 promise，而是专注于提供一个通用的 <code class="highlighter-rouge">then</code> 方法。上述对于 promises 的操作方法将来在其他规范中可能会提及。</p> 
+  <h2 id="terminology"><a href="https://promisesaplus.cn/#terminology" class="anchor"></a>专业术语</h2> 
+  <ol> 
+   <li id="point-6"><a href="https://promisesaplus.cn/#point-6" class="anchor"></a>&quot;promise&quot;是具有<code class="highlighter-rouge">then</code> 方法的对象或函数，其行为符合此规范。</li> 
+   <li id="point-7"><a href="https://promisesaplus.cn/#point-7" class="anchor"></a>&quot;thenable&quot;是定义<code class="highlighter-rouge">then</code> 方法的对象或函数。</li> 
+   <li id="point-8"><a href="https://promisesaplus.cn/#point-8" class="anchor"></a>&quot;value&quot;是任意合法的Javascript值，（包括<code class="highlighter-rouge">undefined</code>,thenable, promise）</li> 
+   <li id="point-9"><a href="https://promisesaplus.cn/#point-9" class="anchor"></a>&quot;exception&quot;是使用 <code class="highlighter-rouge">throw</code> 语句抛出的一个值。 </li> 
+   <li id="point-10"><a href="https://promisesaplus.cn/#point-10" class="anchor"></a>“reason” is a value that indicates why a promise was rejected.</li> 
+  </ol> 
+  <h2 id="requirements"><a href="https://promisesaplus.cn/#requirements" class="anchor"></a>要求</h2> 
+  <h3 id="promise-states"><a href="https://promisesaplus.cn/#promise-states" class="anchor"></a>Promise状态</h3> 
+  <p id="point-11"><a href="https://promisesaplus.cn/#point-11" class="anchor"></a>一个promise必须处于三种状态之一： 等待（pending）， 成功（fulfilled），拒绝（rejected）</p> 
+  <ol> 
+   <li id="point-12"><a href="https://promisesaplus.cn/#point-12" class="anchor"></a>当promise处于pending时： 
+    <ol> 
+     <li id="point-13"><a href="https://promisesaplus.cn/#point-13" class="anchor"></a>promise可以转为fulfilled或rejected状态 </li> 
+     <li id="point-14"><a href="https://promisesaplus.cn/#point-14" class="anchor"></a>当promise处于成功时： 
+      <ol> 
+       <li id="point-15"><a href="https://promisesaplus.cn/#point-15" class="anchor"></a>promise不能切换成别的状态</li> 
+       <li id="point-16"><a href="https://promisesaplus.cn/#point-16" class="anchor"></a>必须拥有一个不可变的返回值</li> 
+      </ol> </li> 
+     <li id="point-17"><a href="https://promisesaplus.cn/#point-17" class="anchor"></a>当promise处于拒绝时： 
+      <ol> 
+       <li id="point-18"><a href="https://promisesaplus.cn/#point-18" class="anchor"></a>promise不能切换成别的状态</li> 
+       <li id="point-19"><a href="https://promisesaplus.cn/#point-19" class="anchor"></a>必须拥有一个不可变的返回原因</li> 
+      </ol> </li> 
+    </ol> </li>
+  </ol> 
+  <p id="point-20"><a href="https://promisesaplus.cn/#point-20" class="anchor"></a> 这里的不可变指的是恒等（即可用 <code class="highlighter-rouge">===</code>) 判断相等），而不是意味着更深层次的不可变（意思是说内存地址不可变，里面的属性可变）。</p> 
+ <h3 id="the-then-method"><a href="https://promisesaplus.cn/#the-then-method" class="anchor"></a>The <code class="highlighter-rouge">then</code> 方法</h3>
 
-    
+<p id="point-21"><a href="https://promisesaplus.cn/#point-21" class="anchor"></a>promise必须提供一个 <code class="highlighter-rouge">then</code> 方法去访问当前或者最终成功的结果或者失败的原因</p>
 
-    <script>
-      "use strict";
-      if (location.href.indexOf("github.io") !== -1) {
-        location.href = "https://promisesaplus.cn/";
-      }
-    </script>
-
-    <link rel="stylesheet" href="./src/stylesheet.css">
-    <link rel="shortcut icon" href="https://promisesaplus.cn/src/favicon.ico">
-
-    <link rel="canonical" href="https://promisesaplus.cn/">
-  </head>
-
-  <body class="spec">
-    <h1 id="promisesa">Promises/A+</h1>
-
-<p id="point-1"><a href="https://promisesaplus.cn/#point-1" class="anchor"></a><strong>An open standard for sound, interoperable JavaScript promises—by implementers, for implementers.</strong></p>
-
-<p id="point-2"><a href="https://promisesaplus.cn/#point-2" class="anchor"></a>A <em>promise</em> represents the eventual result of an asynchronous operation. The primary way of interacting with a promise is through its <code class="highlighter-rouge">then</code> method, which registers callbacks to receive either a promise’s eventual value or the reason why the promise cannot be fulfilled.</p>
-
-<p id="point-3"><a href="https://promisesaplus.cn/#point-3" class="anchor"></a>This specification details the behavior of the <code class="highlighter-rouge">then</code> method, providing an interoperable base which all Promises/A+ conformant promise implementations can be depended on to provide. As such, the specification should be considered very stable. Although the Promises/A+ organization may occasionally revise this specification with minor backward-compatible changes to address newly-discovered corner cases, we will integrate large or backward-incompatible changes only after careful consideration, discussion, and testing.</p>
-
-<p id="point-4"><a href="https://promisesaplus.cn/#point-4" class="anchor"></a>Historically, Promises/A+ clarifies the behavioral clauses of the earlier <a href="http://wiki.commonjs.org/wiki/Promises/A">Promises/A proposal</a>, extending it to cover <em>de facto</em> behaviors and omitting parts that are underspecified or problematic.</p>
-
-<p id="point-5"><a href="https://promisesaplus.cn/#point-5" class="anchor"></a>Finally, the core Promises/A+ specification does not deal with how to create, fulfill, or reject promises, choosing instead to focus on providing an interoperable <code class="highlighter-rouge">then</code> method. Future work in companion specifications may touch on these subjects.</p>
-
-<h2 id="terminology"><a href="https://promisesaplus.cn/#terminology" class="anchor"></a>Terminology</h2>
-
-<ol>
-  <li id="point-6"><a href="https://promisesaplus.cn/#point-6" class="anchor"></a>“promise” is an object or function with a <code class="highlighter-rouge">then</code> method whose behavior conforms to this specification.</li>
-  <li id="point-7"><a href="https://promisesaplus.cn/#point-7" class="anchor"></a>“thenable” is an object or function that defines a <code class="highlighter-rouge">then</code> method.</li>
-  <li id="point-8"><a href="https://promisesaplus.cn/#point-8" class="anchor"></a>“value” is any legal JavaScript value (including <code class="highlighter-rouge">undefined</code>, a thenable, or a promise).</li>
-  <li id="point-9"><a href="https://promisesaplus.cn/#point-9" class="anchor"></a>“exception” is a value that is thrown using the <code class="highlighter-rouge">throw</code> statement.</li>
-  <li id="point-10"><a href="https://promisesaplus.cn/#point-10" class="anchor"></a>“reason” is a value that indicates why a promise was rejected.</li>
-</ol>
-
-<h2 id="requirements"><a href="https://promisesaplus.cn/#requirements" class="anchor"></a>Requirements</h2>
-
-<h3 id="promise-states"><a href="https://promisesaplus.cn/#promise-states" class="anchor"></a>Promise States</h3>
-
-<p id="point-11"><a href="https://promisesaplus.cn/#point-11" class="anchor"></a>A promise must be in one of three states: pending, fulfilled, or rejected.</p>
-
-<ol>
-  <li id="point-12"><a href="https://promisesaplus.cn/#point-12" class="anchor"></a>When pending, a promise:
-    <ol>
-      <li id="point-13"><a href="https://promisesaplus.cn/#point-13" class="anchor"></a>may transition to either the fulfilled or rejected state.</li>
-    </ol>
-  </li>
-  <li id="point-14"><a href="https://promisesaplus.cn/#point-14" class="anchor"></a>When fulfilled, a promise:
-    <ol>
-      <li id="point-15"><a href="https://promisesaplus.cn/#point-15" class="anchor"></a>must not transition to any other state.</li>
-      <li id="point-16"><a href="https://promisesaplus.cn/#point-16" class="anchor"></a>must have a value, which must not change.</li>
-    </ol>
-  </li>
-  <li id="point-17"><a href="https://promisesaplus.cn/#point-17" class="anchor"></a>When rejected, a promise:
-    <ol>
-      <li id="point-18"><a href="https://promisesaplus.cn/#point-18" class="anchor"></a>must not transition to any other state.</li>
-      <li id="point-19"><a href="https://promisesaplus.cn/#point-19" class="anchor"></a>must have a reason, which must not change.</li>
-    </ol>
-  </li>
-</ol>
-
-<p id="point-20"><a href="https://promisesaplus.cn/#point-20" class="anchor"></a>Here, “must not change” means immutable identity (i.e. <code class="highlighter-rouge">===</code>), but does not imply deep immutability.</p>
-
-<h3 id="the-then-method"><a href="https://promisesaplus.cn/#the-then-method" class="anchor"></a>The <code class="highlighter-rouge">then</code> Method</h3>
-
-<p id="point-21"><a href="https://promisesaplus.cn/#point-21" class="anchor"></a>A promise must provide a <code class="highlighter-rouge">then</code> method to access its current or eventual value or reason.</p>
-
-<p id="point-22"><a href="https://promisesaplus.cn/#point-22" class="anchor"></a>A promise’s <code class="highlighter-rouge">then</code> method accepts two arguments:</p>
+<p id="point-22"><a href="https://promisesaplus.cn/#point-22" class="anchor"></a>Promise的<code class="highlighter-rouge">then</code> 方法接收两个参数：</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">promise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">onFulfilled</span><span class="p">,</span> <span class="nx">onRejected</span><span class="p">)</span>
 </code></pre></div></div>
 
 <ol>
-  <li id="point-23"><a href="https://promisesaplus.cn/#point-23" class="anchor"></a>Both <code class="highlighter-rouge">onFulfilled</code> and <code class="highlighter-rouge">onRejected</code> are optional arguments:
+  <li id="point-23"><a href="https://promisesaplus.cn/#point-23" class="anchor"></a> <code class="highlighter-rouge">onFulfilled</code> 和 <code class="highlighter-rouge">onRejected</code> 都为可选的参数:
     <ol>
-      <li id="point-24"><a href="https://promisesaplus.cn/#point-24" class="anchor"></a>If <code class="highlighter-rouge">onFulfilled</code> is not a function, it must be ignored.</li>
-      <li id="point-25"><a href="https://promisesaplus.cn/#point-25" class="anchor"></a>If <code class="highlighter-rouge">onRejected</code> is not a function, it must be ignored.</li>
+      <li id="point-24"><a href="https://promisesaplus.cn/#point-24" class="anchor"></a>如果<code class="highlighter-rouge">onFulfilled</code> 如果不是函数，它将会被忽略。</li>
+      <li id="point-25"><a href="https://promisesaplus.cn/#point-25" class="anchor"></a>如果<code class="highlighter-rouge">onRejected</code> 如果不是函数，它将会被忽略。</li>
     </ol>
   </li>
-  <li id="point-26"><a href="https://promisesaplus.cn/#point-26" class="anchor"></a>If <code class="highlighter-rouge">onFulfilled</code> is a function:
+  <li id="point-26"><a href="https://promisesaplus.cn/#point-26" class="anchor"></a>如果<code class="highlighter-rouge">onFulfilled</code> 是一个函数:
     <ol>
-      <li id="point-27"><a href="https://promisesaplus.cn/#point-27" class="anchor"></a>it must be called after <code class="highlighter-rouge">promise</code> is fulfilled, with <code class="highlighter-rouge">promise</code>’s value as its first argument.</li>
-      <li id="point-28"><a href="https://promisesaplus.cn/#point-28" class="anchor"></a>it must not be called before <code class="highlighter-rouge">promise</code> is fulfilled.</li>
-      <li id="point-29"><a href="https://promisesaplus.cn/#point-29" class="anchor"></a>it must not be called more than once.</li>
+      <li id="point-27"><a href="https://promisesaplus.cn/#point-27" class="anchor"></a>
+        此函数在 <code class="highlighter-rouge">promise</code> 成功后(fulfilled)被调用,并把 <code class="highlighter-rouge">promise</code> 的成功值（value）作为它的第一个参数
+      <li id="point-28"><a href="https://promisesaplus.cn/#point-28" class="anchor"></a>在<code class="highlighter-rouge">promise</code> 成功（fulfilled）之前一定不能提前被调用</li>
+      <li id="point-29"><a href="https://promisesaplus.cn/#point-29" class="anchor"></a>该函数只执行一次</li>
     </ol>
   </li>
-  <li id="point-30"><a href="https://promisesaplus.cn/#point-30" class="anchor"></a>If <code class="highlighter-rouge">onRejected</code> is a function,
+  <li id="point-30"><a href="https://promisesaplus.cn/#point-30" class="anchor"></a>如果<code class="highlighter-rouge">onRejected</code> 是一个函数,
     <ol>
-      <li id="point-31"><a href="https://promisesaplus.cn/#point-31" class="anchor"></a>it must be called after <code class="highlighter-rouge">promise</code> is rejected, with <code class="highlighter-rouge">promise</code>’s reason as its first argument.</li>
-      <li id="point-32"><a href="https://promisesaplus.cn/#point-32" class="anchor"></a>it must not be called before <code class="highlighter-rouge">promise</code> is rejected.</li>
-      <li id="point-33"><a href="https://promisesaplus.cn/#point-33" class="anchor"></a>it must not be called more than once.</li>
+      <li id="point-31"><a href="https://promisesaplus.cn/#point-31" class="anchor"></a>此函数在 <code class="highlighter-rouge">promise</code> 失败（rejected）时被调用, 并且把 <code class="highlighter-rouge">promise</code>的失败原因（reason）当成第一个参数</li>
+      <li id="point-32"><a href="https://promisesaplus.cn/#point-32" class="anchor"></a>在 <code class="highlighter-rouge">promise</code> 失败（rejecte d）之前一定不能提前被调用</li>
+      <li id="point-33"><a href="https://promisesaplus.cn/#point-33" class="anchor"></a>该函数只执行一次</li>
     </ol>
   </li>
-  <li id="point-34"><a href="https://promisesaplus.cn/#point-34" class="anchor"></a><code class="highlighter-rouge">onFulfilled</code> or <code class="highlighter-rouge">onRejected</code> must not be called until the <a href="https://es5.github.io/#x10.3">execution context</a> stack contains only platform code. [<a href="https://promisesaplus.cn/#notes">3.1</a>].</li>
-  <li id="point-35"><a href="https://promisesaplus.cn/#point-35" class="anchor"></a><code class="highlighter-rouge">onFulfilled</code> and <code class="highlighter-rouge">onRejected</code> must be called as functions (i.e. with no <code class="highlighter-rouge">this</code> value). [<a href="https://promisesaplus.cn/#notes">3.2</a>]</li>
-  <li id="point-36"><a href="https://promisesaplus.cn/#point-36" class="anchor"></a><code class="highlighter-rouge">then</code> may be called multiple times on the same promise.
+  <li id="point-34"><a href="https://promisesaplus.cn/#point-34" class="anchor"></a><code class="highlighter-rouge">onFulfilled</code> 和 <code class="highlighter-rouge">onRejected</code> 只有在 <a href="https://es5.github.io/#x10.3">执行上下文</a> 堆栈仅包含平台代码时才可被调用 [<a href="https://promisesaplus.cn/#notes">3.1</a>]</li>
+  <li id="point-35"><a href="https://promisesaplus.cn/#point-35" class="anchor"></a><code class="highlighter-rouge">onFulfilled</code> 和 <code class="highlighter-rouge">onRejected</code> 必须被作为函数调用 (尽管没有 <code class="highlighter-rouge">this</code> 值). [<a href="https://promisesaplus.cn/#notes">3.2</a>]</li>
+  <li id="point-36"><a href="https://promisesaplus.cn/#point-36" class="anchor"></a><code class="highlighter-rouge">then</code> 方法可以被同一个promise多次调用
     <ol>
-      <li id="point-37"><a href="https://promisesaplus.cn/#point-37" class="anchor"></a>If/when <code class="highlighter-rouge">promise</code> is fulfilled, all respective <code class="highlighter-rouge">onFulfilled</code> callbacks must execute in the order of their originating calls to <code class="highlighter-rouge">then</code>.</li>
-      <li id="point-38"><a href="https://promisesaplus.cn/#point-38" class="anchor"></a>If/when <code class="highlighter-rouge">promise</code> is rejected, all respective <code class="highlighter-rouge">onRejected</code> callbacks must execute in the order of their originating calls to <code class="highlighter-rouge">then</code>.</li>
+      <li id="point-37"><a href="https://promisesaplus.cn/#point-37" class="anchor"></a>当 <code class="highlighter-rouge">promise</code> 成功时, 所有  <code class="highlighter-rouge">onFulfilled</code> 回调函数需按照最原始的<code class="highlighter-rouge">then</code>顺序来调用</li>
+      <li id="point-38"><a href="https://promisesaplus.cn/#point-38" class="anchor"></a>当<code class="highlighter-rouge">promise</code> 失败时，所有各自的<code class="highlighter-rouge">onRejected</code>回调都必须按照其对<code class="highlighter-rouge">then</code>的原始调用顺序执行</li>
     </ol>
   </li>
   <li id="point-39"><a href="https://promisesaplus.cn/#point-39" class="anchor"></a>
-    <p id="point-40"><a href="https://promisesaplus.cn/#point-40" class="anchor"></a><code class="highlighter-rouge">then</code> must return a promise [<a href="https://promisesaplus.cn/#notes">3.3</a>].</p>
+    <p id="point-40"><a href="https://promisesaplus.cn/#point-40" class="anchor"></a><code class="highlighter-rouge">then</code> 必须返回一个promise [<a href="https://promisesaplus.cn/#notes">3.3</a>].</p>
 
     <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nx">promise2</span> <span class="o">=</span> <span class="nx">promise1</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">onFulfilled</span><span class="p">,</span> <span class="nx">onRejected</span><span class="p">);</span>
 </code></pre></div>    </div>
 
     <ol>
-      <li id="point-41"><a href="https://promisesaplus.cn/#point-41" class="anchor"></a>If either <code class="highlighter-rouge">onFulfilled</code> or <code class="highlighter-rouge">onRejected</code> returns a value <code class="highlighter-rouge">x</code>, run the Promise Resolution Procedure <code class="highlighter-rouge">[[Resolve]](promise2, x)</code>.</li>
-      <li id="point-42"><a href="https://promisesaplus.cn/#point-42" class="anchor"></a>If either <code class="highlighter-rouge">onFulfilled</code> or <code class="highlighter-rouge">onRejected</code> throws an exception <code class="highlighter-rouge">e</code>, <code class="highlighter-rouge">promise2</code> must be rejected with <code class="highlighter-rouge">e</code> as the reason.</li>
-      <li id="point-43"><a href="https://promisesaplus.cn/#point-43" class="anchor"></a>If <code class="highlighter-rouge">onFulfilled</code> is not a function and <code class="highlighter-rouge">promise1</code> is fulfilled, <code class="highlighter-rouge">promise2</code> must be fulfilled with the same value as <code class="highlighter-rouge">promise1</code>.</li>
-      <li id="point-44"><a href="https://promisesaplus.cn/#point-44" class="anchor"></a>If <code class="highlighter-rouge">onRejected</code> is not a function and <code class="highlighter-rouge">promise1</code> is rejected, <code class="highlighter-rouge">promise2</code> must be rejected with the same reason as <code class="highlighter-rouge">promise1</code>.</li>
+      <li id="point-41"><a href="https://promisesaplus.cn/#point-41" class="anchor"></a>
+        如果 <code class="highlighter-rouge">onFulfilled</code> 或者 <code class="highlighter-rouge">onRejected</code>  返回一个值 <code class="highlighter-rouge">x</code>
+       , 则运行下面的 Promise 解决过程： <code class="highlighter-rouge">[[Resolve]](promise2, x)</code>.</li>
+      <li id="point-42"><a href="https://promisesaplus.cn/#point-42" class="anchor"></a>如果<code class="highlighter-rouge">onFulfilled</code>或 <code class="highlighter-rouge">onRejected</code>抛出一个异常<code class="highlighter-rouge">e</code>,promise2 必须被拒绝（rejected）并把<code class="highlighter-rouge">e</code>当作失败的原因（reason）</li>
+      <li id="point-43"><a href="https://promisesaplus.cn/#point-43" class="anchor"></a>如果<code class="highlighter-rouge">onFulfilled</code>不是一个函数且promise1成功执行（fulfilled）,则 <code class="highlighter-rouge">promise2</code>将会接收<code class="highlighter-rouge">promise1</code>传递下来的成功（fulfilled）的值</li>
+      <li id="point-44"><a href="https://promisesaplus.cn/#point-44" class="anchor"></a>如果<code class="highlighter-rouge">onRejected</code>不是一个函数，并且<code class="highlighter-rouge">promise1</code>已经失败了（rejected）,则必须以同<code class="highlighter-rouge">promise1</code>相同的失败（rejected）的原因（reason）传递到<code class="highlighter-rouge">promise2</code> </li>
     </ol>
   </li>
 </ol>
 
-<h3 id="the-promise-resolution-procedure"><a href="https://promisesaplus.cn/#the-promise-resolution-procedure" class="anchor"></a>The Promise Resolution Procedure</h3>
+<h3 id="the-promise-resolution-procedure"><a href="https://promisesaplus.cn/#the-promise-resolution-procedure" class="anchor"></a>Promise 处理过程</h3>
 
 <p id="point-45"><a href="https://promisesaplus.cn/#point-45" class="anchor"></a>The <strong>promise resolution procedure</strong> is an abstract operation taking as input a promise and a value, which we denote as <code class="highlighter-rouge">[[Resolve]](promise, x)</code>. If <code class="highlighter-rouge">x</code> is a thenable, it attempts to make <code class="highlighter-rouge">promise</code> adopt the state of <code class="highlighter-rouge">x</code>, under the assumption that <code class="highlighter-rouge">x</code> behaves at least somewhat like a promise. Otherwise, it fulfills <code class="highlighter-rouge">promise</code> with the value <code class="highlighter-rouge">x</code>.</p>
 
