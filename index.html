@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
  <head> 
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
   <title>Promises/A+</title> 
@@ -26,7 +26,7 @@
    <li id="point-7"><a href="https://promisesaplus.cn/#point-7" class="anchor"></a>&quot;thenable&quot;是定义<code class="highlighter-rouge">then</code> 方法的对象或函数。</li> 
    <li id="point-8"><a href="https://promisesaplus.cn/#point-8" class="anchor"></a>&quot;value&quot;是任意合法的Javascript值，（包括<code class="highlighter-rouge">undefined</code>,thenable, promise）</li> 
    <li id="point-9"><a href="https://promisesaplus.cn/#point-9" class="anchor"></a>&quot;exception&quot;是使用 <code class="highlighter-rouge">throw</code> 语句抛出的一个值。 </li> 
-   <li id="point-10"><a href="https://promisesaplus.cn/#point-10" class="anchor"></a>“reason” is a value that indicates why a promise was rejected.</li> 
+   <li id="point-10"><a href="https://promisesaplus.cn/#point-10" class="anchor"></a>“reason” 是一个值，用来表明 promise 被拒绝的原因。</li> 
   </ol> 
   <h2 id="requirements"><a href="https://promisesaplus.cn/#requirements" class="anchor"></a>要求</h2> 
   <h3 id="promise-states"><a href="https://promisesaplus.cn/#promise-states" class="anchor"></a>Promise状态</h3> 
@@ -48,7 +48,7 @@
     </ol> </li>
   </ol> 
   <p id="point-20"><a href="https://promisesaplus.cn/#point-20" class="anchor"></a> 这里的不可变指的是恒等（即可用 <code class="highlighter-rouge">===</code>) 判断相等），而不是意味着更深层次的不可变（意思是说内存地址不可变，里面的属性可变）。</p> 
- <h3 id="the-then-method"><a href="https://promisesaplus.cn/#the-then-method" class="anchor"></a>The <code class="highlighter-rouge">then</code> 方法</h3>
+ <h3 id="the-then-method"><a href="https://promisesaplus.cn/#the-then-method" class="anchor"></a> <code class="highlighter-rouge">then</code> 方法</h3>
 
 <p id="point-21"><a href="https://promisesaplus.cn/#point-21" class="anchor"></a>promise必须提供一个 <code class="highlighter-rouge">then</code> 方法去访问当前或者最终成功的结果或者失败的原因</p>
 
@@ -75,7 +75,7 @@
   <li id="point-30"><a href="https://promisesaplus.cn/#point-30" class="anchor"></a>如果<code class="highlighter-rouge">onRejected</code> 是一个函数,
     <ol>
       <li id="point-31"><a href="https://promisesaplus.cn/#point-31" class="anchor"></a>此函数在 <code class="highlighter-rouge">promise</code> 失败（rejected）时被调用, 并且把 <code class="highlighter-rouge">promise</code>的失败原因（reason）当成第一个参数</li>
-      <li id="point-32"><a href="https://promisesaplus.cn/#point-32" class="anchor"></a>在 <code class="highlighter-rouge">promise</code> 失败（rejecte d）之前一定不能提前被调用</li>
+      <li id="point-32"><a href="https://promisesaplus.cn/#point-32" class="anchor"></a>在 <code class="highlighter-rouge">promise</code> 失败（rejected）之前一定不能提前被调用</li>
       <li id="point-33"><a href="https://promisesaplus.cn/#point-33" class="anchor"></a>该函数只执行一次</li>
     </ol>
   </li>
@@ -117,7 +117,7 @@
   <li id="point-48"><a href="https://promisesaplus.cn/#point-48" class="anchor"></a>如果 <code class="highlighter-rouge">promise</code> 和 <code class="highlighter-rouge">x</code> 是相同的, 则以 <code class="highlighter-rouge">promise</code>的 <code class="highlighter-rouge">TypeError</code> 报错.</li>
   <li id="point-49"><a href="https://promisesaplus.cn/#point-49" class="anchor"></a>如果 <code class="highlighter-rouge">x</code> 是一个 promise对象, 则使 promise 接受 x 的状态 [<a href="https://promisesaplus.cn/#notes">3.4</a>]:
     <ol>
-      <li id="point-50"><a href="https://promisesaplus.cn/#point-50" class="anchor"></a>如果  <code class="highlighter-rouge">x</code> 处于等待态， <code class="highlighter-rouge">promise</code> 需保持为等待态直至 x 被执行或拒绝</li>
+      <li id="point-50"><a href="https://promisesaplus.cn/#point-50" class="anchor"></a>如果  <code class="highlighter-rouge">x</code> 处于等待状态， <code class="highlighter-rouge">promise</code> 需保持为等待态直至 x 被执行或拒绝</li>
       <li id="point-51"><a href="https://promisesaplus.cn/#point-51" class="anchor"></a>如果 <code class="highlighter-rouge">x</code> 处于执行态，用相同的值执行 <code class="highlighter-rouge">promise</code> </li>
       <li id="point-52"><a href="https://promisesaplus.cn/#point-52" class="anchor"></a>如果 <code class="highlighter-rouge">x</code> 处于拒绝态，用相同的据因拒绝 <code class="highlighter-rouge">promise</code> </li>
     </ol>
@@ -125,27 +125,27 @@
   <li id="point-53"><a href="https://promisesaplus.cn/#point-53" class="anchor"></a><code class="highlighter-rouge">x</code> 是对象或者函数时
     <ol>
       <li id="point-54"><a href="https://promisesaplus.cn/#point-54" class="anchor"></a>把 <code class="highlighter-rouge">x.then</code> 赋值给 <code class="highlighter-rouge">then</code> 方法 [<a href="https://promisesaplus.cn/#notes">3.5</a>]</li>
-      <li id="point-55"><a href="https://promisesaplus.cn/#point-55" class="anchor"></a> If retrieving the property <code class="highlighter-rouge">x.then</code> results in a thrown exception <code class="highlighter-rouge">e</code>, reject <code class="highlighter-rouge">promise</code> with <code class="highlighter-rouge">e</code> as the reason.</li>
-      <li id="point-56"><a href="https://promisesaplus.cn/#point-56" class="anchor"></a>If <code class="highlighter-rouge">then</code> is a function, call it with <code class="highlighter-rouge">x</code> as <code class="highlighter-rouge">this</code>, first argument <code class="highlighter-rouge">resolvePromise</code>, and second argument <code class="highlighter-rouge">rejectPromise</code>, where:
+      <li id="point-55"><a href="https://promisesaplus.cn/#point-55" class="anchor"></a>如果在获取属性<code class="highlighter-rouge">x.then</code>的过程中导致抛出异常<code class="highlighter-rouge">e</code>，则拒绝<code class="highlighter-rouge">promise</code> 并用<code class="highlighter-rouge">e</code> 作为拒绝原因。</li>
+      <li id="point-56"><a href="https://promisesaplus.cn/#point-56" class="anchor"></a>如果<code class="highlighter-rouge">then</code>是函数，则将<code class="highlighter-rouge">x</code>作为函数的作用域的this被绑定并调用。传递两个回调函数作为参数，第一个参数叫做<code class="highlighter-rouge">resolvePromise</code>，第二个参数叫做<code class="highlighter-rouge">rejectPromise</code>:
         <ol>
-          <li id="point-57"><a href="https://promisesaplus.cn/#point-57" class="anchor"></a>If/when <code class="highlighter-rouge">resolvePromise</code> is called with a value <code class="highlighter-rouge">y</code>, run <code class="highlighter-rouge">[[Resolve]](promise, y)</code>.</li>
-          <li id="point-58"><a href="https://promisesaplus.cn/#point-58" class="anchor"></a>If/when <code class="highlighter-rouge">rejectPromise</code> is called with a reason <code class="highlighter-rouge">r</code>, reject <code class="highlighter-rouge">promise</code> with <code class="highlighter-rouge">r</code>.</li>
-          <li id="point-59"><a href="https://promisesaplus.cn/#point-59" class="anchor"></a>If both <code class="highlighter-rouge">resolvePromise</code> and <code class="highlighter-rouge">rejectPromise</code> are called, or multiple calls to the same argument are made, the first call takes precedence, and any further calls are ignored.</li>
-          <li id="point-60"><a href="https://promisesaplus.cn/#point-60" class="anchor"></a>If calling <code class="highlighter-rouge">then</code> throws an exception <code class="highlighter-rouge">e</code>
+          <li id="point-57"><a href="https://promisesaplus.cn/#point-57" class="anchor"></a>如果  <code class="highlighter-rouge">resolvePromise</code> 以值 <code class="highlighter-rouge">y</code>为参数被调用，则运行  <code class="highlighter-rouge">[[Resolve]](promise, y)</code></li>
+          <li id="point-58"><a href="https://promisesaplus.cn/#point-58" class="anchor"></a>如果<code class="highlighter-rouge">rejectPromise</code> 以据因<code class="highlighter-rouge">r</code>为参数被调用，则以据因<code class="highlighter-rouge">r</code>拒绝<code class="highlighter-rouge">promise</code></li>
+          <li id="point-59"><a href="https://promisesaplus.cn/#point-59" class="anchor"></a>如果<code class="highlighter-rouge">resolvePromise</code> 和 <code class="highlighter-rouge">rejectPromise</code>均被调用，或者被同一参数调用了多次，则优先采用首次调用并忽略剩下的调用</li>
+          <li id="point-60"><a href="https://promisesaplus.cn/#point-60" class="anchor"></a>如果调用<code class="highlighter-rouge">then</code>方法抛出了异常<code class="highlighter-rouge">e</code>：
             <ol>
-              <li id="point-61"><a href="https://promisesaplus.cn/#point-61" class="anchor"></a>If <code class="highlighter-rouge">resolvePromise</code> or <code class="highlighter-rouge">rejectPromise</code> have been called, ignore it.</li>
-              <li id="point-62"><a href="https://promisesaplus.cn/#point-62" class="anchor"></a>Otherwise, reject <code class="highlighter-rouge">promise</code> with <code class="highlighter-rouge">e</code> as the reason.</li>
+              <li id="point-61"><a href="https://promisesaplus.cn/#point-61" class="anchor"></a>如果<code class="highlighter-rouge">resolvePromise</code> 或<code class="highlighter-rouge">rejectPromise</code>已经被调用，则忽略它</li>
+              <li id="point-62"><a href="https://promisesaplus.cn/#point-62" class="anchor"></a>否则以<code class="highlighter-rouge">e</code>为拒绝<code class="highlighter-rouge">promise</code> 的原因</li>
             </ol>
           </li>
         </ol>
       </li>
-      <li id="point-63"><a href="https://promisesaplus.cn/#point-63" class="anchor"></a>If <code class="highlighter-rouge">then</code> is not a function, fulfill <code class="highlighter-rouge">promise</code> with <code class="highlighter-rouge">x</code>.</li>
+      <li id="point-63"><a href="https://promisesaplus.cn/#point-63" class="anchor"></a>如果<code class="highlighter-rouge">then</code>不是函数，以<code class="highlighter-rouge">x</code>为参数执行 promise</li>
     </ol>
   </li>
-  <li id="point-64"><a href="https://promisesaplus.cn/#point-64" class="anchor"></a>If <code class="highlighter-rouge">x</code> is not an object or function, fulfill <code class="highlighter-rouge">promise</code> with <code class="highlighter-rouge">x</code>.</li>
+  <li id="point-64"><a href="https://promisesaplus.cn/#point-64" class="anchor"></a>如果<code class="highlighter-rouge">x</code>不是对象或者函数，以<code class="highlighter-rouge">x</code>为参数执行 promise</li>
 </ol>
 
-<p id="point-65"><a href="https://promisesaplus.cn/#point-65" class="anchor"></a>If a promise is resolved with a thenable that participates in a circular thenable chain, such that the recursive nature of <code class="highlighter-rouge">[[Resolve]](promise, thenable)</code> eventually causes <code class="highlighter-rouge">[[Resolve]](promise, thenable)</code> to be called again, following the above algorithm will lead to infinite recursion. Implementations are encouraged, but not required, to detect such recursion and reject <code class="highlighter-rouge">promise</code> with an informative <code class="highlighter-rouge">TypeError</code> as the reason. [<a href="https://promisesaplus.cn/#notes">3.6</a>]</p>
+<p id="point-65"><a href="https://promisesaplus.cn/#point-65" class="anchor"></a>如果 promise 被一个 thenable 解决，且该 thenable 参与一个 thenable 循环链，那么 <code class="highlighter-rouge">[[Resolve]](promise, thenable)</code>的递归性质最终导致 <code class="highlighter-rouge">[[Resolve]](promise, thenable)</code>被再次调用，上述算法将导致无限递归。支持实现此类递归检测，并以一个 <code class="highlighter-rouge">TypeError</code>类型的值作为原因拒绝 <code class="highlighter-rouge">promise</code>，但此类检测不是必须的。 [<a href="https://promisesaplus.cn/#notes">3.6</a>]</p>
 
 <h2 id="notes"><a href="https://promisesaplus.cn/#notes" class="anchor"></a>Notes</h2>
 
