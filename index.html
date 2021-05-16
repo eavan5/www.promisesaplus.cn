@@ -58,13 +58,13 @@
 </code></pre></div></div>
 
 <ol>
-  <li id="point-23"><a href="https://promisesaplus.cn/#point-23" class="anchor"></a> <code class="highlighter-rouge">onFulfilled</code> 和 <code class="highlighter-rouge">onRejected</code> 都为可选的参数:
+  <li id="point-23"><a href="https://promisesaplus.cn/#point-23" class="anchor"></a> <code class="highlighter-rouge">onFulfilled</code> 和 <code class="highlighter-rouge">onRejected</code> 都为可选的参数时:
     <ol>
       <li id="point-24"><a href="https://promisesaplus.cn/#point-24" class="anchor"></a>如果<code class="highlighter-rouge">onFulfilled</code> 如果不是函数，它将会被忽略。</li>
       <li id="point-25"><a href="https://promisesaplus.cn/#point-25" class="anchor"></a>如果<code class="highlighter-rouge">onRejected</code> 如果不是函数，它将会被忽略。</li>
     </ol>
   </li>
-  <li id="point-26"><a href="https://promisesaplus.cn/#point-26" class="anchor"></a>如果<code class="highlighter-rouge">onFulfilled</code> 是一个函数:
+  <li id="point-26"><a href="https://promisesaplus.cn/#point-26" class="anchor"></a>如果<code class="highlighter-rouge">onFulfilled</code> 是一个函数时:
     <ol>
       <li id="point-27"><a href="https://promisesaplus.cn/#point-27" class="anchor"></a>
         此函数在 <code class="highlighter-rouge">promise</code> 成功后(fulfilled)被调用,并把 <code class="highlighter-rouge">promise</code> 的成功值（value）作为它的第一个参数
@@ -72,7 +72,7 @@
       <li id="point-29"><a href="https://promisesaplus.cn/#point-29" class="anchor"></a>该函数只执行一次</li>
     </ol>
   </li>
-  <li id="point-30"><a href="https://promisesaplus.cn/#point-30" class="anchor"></a>如果<code class="highlighter-rouge">onRejected</code> 是一个函数,
+  <li id="point-30"><a href="https://promisesaplus.cn/#point-30" class="anchor"></a>如果<code class="highlighter-rouge">onRejected</code> 是一个函数时,
     <ol>
       <li id="point-31"><a href="https://promisesaplus.cn/#point-31" class="anchor"></a>此函数在 <code class="highlighter-rouge">promise</code> 失败（rejected）时被调用, 并且把 <code class="highlighter-rouge">promise</code>的失败原因（reason）当成第一个参数</li>
       <li id="point-32"><a href="https://promisesaplus.cn/#point-32" class="anchor"></a>在 <code class="highlighter-rouge">promise</code> 失败（rejected）之前一定不能提前被调用</li>
@@ -151,7 +151,7 @@
 
 <ol>
   <li id="point-66"><a href="https://promisesaplus.cn/#point-66" class="anchor"></a>
-    <p id="point-67"><a href="https://promisesaplus.cn/#point-67" class="anchor"></a>Here “platform code” means engine, environment, and promise implementation code. In practice, this requirement ensures that <code class="highlighter-rouge">onFulfilled</code> and <code class="highlighter-rouge">onRejected</code> execute asynchronously, after the event loop turn in which <code class="highlighter-rouge">then</code> is called, and with a fresh stack. This can be implemented with either a “macro-task” mechanism such as <a href="https://html.spec.whatwg.org/multipage/webappapis.html#timers"><code class="highlighter-rouge">setTimeout</code></a> or <a href="https://dvcs.w3.org/hg/webperf/raw-file/tip/specs/setImmediate/Overview.html#processingmodel"><code class="highlighter-rouge">setImmediate</code></a>, or with a “micro-task” mechanism such as <a href="https://dom.spec.whatwg.org/#interface-mutationobserver"><code class="highlighter-rouge">MutationObserver</code></a> or <a href="https://nodejs.org/api/process.html#process_process_nexttick_callback"><code class="highlighter-rouge">process.nextTick</code></a>. Since the promise implementation is considered platform code, it may itself contain a task-scheduling queue or “trampoline” in which the handlers are called.</p>
+    <p id="point-67"><a href="https://promisesaplus.cn/#point-67" class="anchor"></a>这里的“平台代码”意味着引擎，环境和 promise 实现代码。实际上，这个要求确保了 <code class="highlighter-rouge">onFulfilled</code> 和 <code class="highlighter-rouge">onRejected</code> 的异步执行，在事件循环结束后用新的堆栈调用 <code class="highlighter-rouge">then</code> <code class="highlighter-rouge">setTimeout</code> 或 <code class="highlighter-rouge">setImmediate</code> 之类的“宏任务”机制，或者使用诸如 <code class="highlighter-rouge">MutationObserver</code> 或 <code class="highlighter-rouge">process.nextTick</code> 之类的“微任务”机制来实现。由于 promise 实现被认为是平台代码，因此它本身可能包含一个任务调度队列或 “trampoline”，在任务调度队列或 “trampoline” 中，处理程序被调用。</p>
   </li>
   <li id="point-68"><a href="https://promisesaplus.cn/#point-68" class="anchor"></a>
     <p id="point-69"><a href="https://promisesaplus.cn/#point-69" class="anchor"></a>That is, in strict mode <code class="highlighter-rouge">this</code> will be <code class="highlighter-rouge">undefined</code> inside of them; in sloppy mode, it will be the global object.</p>
